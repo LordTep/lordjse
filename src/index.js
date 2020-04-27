@@ -1,8 +1,5 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import './style.css';
-import Jimmy from './images/Jimmy_0238_1400px.jpg';
-import { createArrow } from './geometry';
 import { createSkybox } from './skybox';
 
 let scene = new THREE.Scene();
@@ -11,31 +8,44 @@ camera.position.set(-900, -200, -900);
 
 let renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-//renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setPixelRatio( window.devicePixelRatio );
 document.body.appendChild(renderer.domElement);
 
-let controls = new OrbitControls(camera, renderer.domElement);
-//controls.addEventListener('change', renderer);
-controls.minDistance = 500;
-controls.maxDistance = 1500;
+let mouseX = 0, mouseY = 0;
+
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
 
 let skybox = createSkybox();
 scene.add(skybox);
 
 function animate() {
-    requestAnimationFrame( animate );
-    renderer.render( scene, camera );
+    requestAnimationFrame(animate);
+
+    camera.position.x += (mouseX - camera.position.x) * .05;
+    camera.position.y += (-mouseY - camera.position.y) * .05;
+    camera.lookAt( scene.position );
+
+
+    skybox.rotation.x += 0.0005;
+    skybox.rotation.y += 0.0005;
+
+    renderer.render(scene, camera);
 };
 
 animate();
 
-window.addEventListener( 'resize', onWindowResize, false );
+window.addEventListener('resize', onWindowResize, false);
+document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+function onDocumentMouseMove(event) {
+    mouseX = (event.clientX - windowHalfX);
+    mouseY = (event.clientY - windowHalfY);
+}
 
 function onWindowResize() {
-
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
-
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
