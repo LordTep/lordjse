@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import './style.css';
-import { createSkybox } from './skybox';
-import { createJimmyCube } from './geometry';
+import { createJimmyCube, createSkybox } from './geometry';
 import { orbit } from './movement';
 
 let scene = new THREE.Scene();
