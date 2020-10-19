@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import './style.css';
 import { createSkybox } from './skybox';
+import { createJimmyCube } from './geometry';
+import { orbit } from './movement';
 
 let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera( 55, window.innerWidth/window.innerHeight, 45, 30000 );
@@ -13,11 +15,14 @@ document.body.appendChild(renderer.domElement);
 
 let mouseX = 0, mouseY = 0;
 
-let windowHalfX = window.innerWidth / 2;
-let windowHalfY = window.innerHeight / 2;
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
 
-let skybox = createSkybox();
+const skybox = createSkybox();
 scene.add(skybox);
+
+const jimmyCube = createJimmyCube('jimmyCube');
+scene.add(jimmyCube);
 
 function animate() {
     requestAnimationFrame(animate);
@@ -26,7 +31,13 @@ function animate() {
     camera.position.y += (-mouseY - camera.position.y) * .05;
     camera.lookAt( scene.position );
 
+    orbit(jimmyCube, new THREE.Vector3(0, 0, 1300));
+    
+    // rotate for fun
+    jimmyCube.rotation.x += 0.001;
+    jimmyCube.rotation.y += 0.001;
 
+    // rotate skybox for floating in space effect
     skybox.rotation.x += 0.0005;
     skybox.rotation.y += 0.0005;
 
