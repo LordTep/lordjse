@@ -3,11 +3,11 @@ import './style.css';
 import { createJimmyCube, createSkybox } from './geometry';
 import { orbit } from './movement';
 
-let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera( 55, window.innerWidth/window.innerHeight, 45, 30000 );
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 55, window.innerWidth/window.innerHeight, 45, 30000 );
 camera.position.set(-900, -200, -900);
 
-let renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio( window.devicePixelRatio );
 document.body.appendChild(renderer.domElement);
