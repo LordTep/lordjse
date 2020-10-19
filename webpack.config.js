@@ -30,5 +30,13 @@ module.exports = {
          ],
        },
       ],
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      hash: true,
+      filename: './index.html',
+      template: './src/index.html',
+      title: 'Jimmy Lord',
+    })
+  ]
 };
